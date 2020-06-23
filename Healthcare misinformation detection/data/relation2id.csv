@@ -1,0 +1,11 @@
+10
+aggravates,0
+alleviates,1
+causes,2
+createsRiskFor,3
+heals,4
+reducesRiskFor,5
+notCauses,6
+notCreatesRiskFor,7
+notHeals,8
+notReducesRiskFor,9
