@@ -69,9 +69,9 @@ def data_generator(datas, big_graphs, config, shuffle=True, k_hop=0):
                 "entity_indices": torch.arange(config.entity_size).cpu(),
                 "text_indices": torch.unsqueeze(torch.LongTensor(text_indices), dim=0).cpu(),
                 "text_lengths": torch.LongTensor([text_length]).cpu(),
-                # "triple_head_indices": torch.LongTensor(triple_head_indices).cpu(),
-                # "triple_relation_indices": torch.LongTensor(triple_relation_indices).cpu(),
-                # "triple_tail_indices": torch.LongTensor(triple_tail_indices).cpu()
+                "triple_head_indices": torch.LongTensor(triple_head_indices).cpu(),
+                "triple_relation_indices": torch.LongTensor(triple_relation_indices).cpu(),
+                "triple_tail_indices": torch.LongTensor(triple_tail_indices).cpu()
             }
             input_dict.update([("adjacent_%s" % i, adjacent.cpu()) for i, adjacent in enumerate(adjacents)])
 
@@ -126,7 +126,7 @@ def test():
     with torch.no_grad():
         for input_dict, output_dict in data_generator(datas_test, big_graphs, config, shuffle=False,
                                                       k_hop=config.k_hop):
-            scores = model(input_dict)
+            scores, brp_loss, triples = model(input_dict)
 
             acc_num += compute_acc(scores, output_dict["score"])
             total_num += len(output_dict["score"])
